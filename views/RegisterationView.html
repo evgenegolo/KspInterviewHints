@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/RegisterationForm.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">Registration</div>
+        <div class="content">
+            <form action="/?controller=user&method=addUser" method="POST" onsubmit="return validateFields()">
+                <div class="user-details">
+                    <div class="input-box">
+                        <span class="details">Full Name</span>
+                        <input id="name" name="name" type="text" placeholder="Enter your name"
+                            onblur="addToCoockie(name)" required />
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Username</span>
+                        <input id="userName" name="userName" type="text" placeholder="Enter your username" required />
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Email</span>
+                        <input id="email" name="email" type="text" placeholder="Enter your email" required />
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Password</span>
+                        <input id="password" name="password" type="password" placeholder="Enter your password"
+                            required />
+                    </div>
+                    <div class="input-box">
+                        <span id="confPasswordMsg" class="details">Confirm Password</span>
+                        <input id="confPassword" type="password" placeholder="Enter your password"
+                            onblur="validatePassword()" required />
+                    </div>
+                </div>
+                <div class="button">
+                    <input type="submit" value="Register" />
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    var validatePassword = () => {
+        let password = document.getElementById("password");
+        let ConfirmPassword = document.getElementById("confPassword");
+        if (password.value === ConfirmPassword.value) {
+            document.getElementById("confPasswordMsg").style.color = "Green";
+            document.getElementById("confPasswordMsg").innerHTML = "Passwords match!";
+            return true;
+        } else {
+            document.getElementById("confPasswordMsg").style.color = "Red";
+            document.getElementById("confPasswordMsg").innerHTML = "Passwords do NOT match!";
+            return false;
+        }
+    }
+
+    var validateName = () => {
+        let name = document.getElementById("name");
+        if (name.value !== "" && sqlInjeqsitoncCheck(name.value))
+            return true
+        else
+            return false
+    }
+
+    var validateUserName = () => {
+        let userName = document.getElementById("userName");
+        console.log(userName.value);
+        if (userName.value !== "" && sqlInjeqsitoncCheck(email.value)) {
+            console.log(sqlInjeqsitoncCheck(userName));
+            return true
+        }
+
+        else
+            return false
+    }
+
+    var validateEmail = () => {
+        let email = document.getElementById("email");
+        if (email.value !== "" && sqlInjeqsitoncCheck(email.value) && (email.includes("@")))
+            return true
+        else
+            return false
+    }
+
+    var validateFields = () => validatePassword() && validateName() && validateUserName() && validateEmail() ? true : false;
+
+    var sqlInjeqsitoncCheck = str => str.indexOf('SELECT') == -1 && str.indexOf('INSERET') == -1 ? true : false;
+
+    var addToCoockie = (elementId) => document.cookie = `${elementId} ${document.getElementById(`${elementId}`).innerHTML}`;
+</script>
+
+</html>
